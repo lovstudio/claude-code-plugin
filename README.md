@@ -1,10 +1,10 @@
 <p align="center">
-  <img src="docs/images/cover.png" alt="lovstudio-claude-code-configuration Cover" width="100%">
+  <img src="docs/images/cover.png" alt="claude-code-plugin Cover" width="100%">
 </p>
 
 <h1 align="center">
   <img src="assets/logo.svg" width="32" height="32" alt="Logo" align="top">
-  lovstudio-claude-code-configuration
+  claude-code-plugin
 </h1>
 
 <p align="center">
@@ -33,10 +33,10 @@
 
 ```bash
 # Add marketplace
-/plugin marketplace add MarkShawn2020/lovstudio-claude-code-configuration
+/plugin marketplace add MarkShawn2020/claude-code-plugin
 
 # Install plugin
-/plugin install lovstudio@lovstudio-claude-code-configuration
+/plugin install lovstudio@claude-code-plugin
 ```
 
 ## Skills
@@ -56,7 +56,7 @@ Generate stable, hash-based port numbers for projects (range 3000-8999).
 
 ```bash
 ${CLAUDE_PLUGIN_ROOT}/skills/project-port/scripts/hashport.sh [project-name]
-# Output: 5142  ← lovstudio-claude-code-configuration
+# Output: 5142  ← claude-code-plugin
 ```
 
 Same project name always returns the same port.
@@ -73,7 +73,7 @@ Hooks integrate with Lovnotifier for desktop notifications with tmux context.
 ## Structure
 
 ```
-lovstudio-claude-code-configuration/
+claude-code-plugin/
 ├── .claude-plugin/
 │   ├── plugin.json        # Plugin manifest
 │   └── marketplace.json   # Self-hosted marketplace
