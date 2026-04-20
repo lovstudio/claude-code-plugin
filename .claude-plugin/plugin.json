@@ -5,7 +5,7 @@
   "author": {
     "name": "Lovstudio"
   },
-  "repository": "https://github.com/lovstudio/claude-code-plugin",
+  "repository": "https://github.com/lovstudio/claude-plugins",
   "license": "MIT",
   "keywords": ["personal", "toolkit", "image-gen", "commands", "notifications"]
 }
