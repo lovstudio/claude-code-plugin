@@ -1,0 +1,14 @@
+# Changelog for install-shadcn-ui
+
+## v1.0.0 - 2026-04-21
+- Initial release
+- 自动化 shadcn/ui 在 Vite + Tailwind v4 项目里的初始化
+- 编码踩坑修复：
+  - nova preset 强制覆盖品牌色 → 提供完整的 Lovstudio 暖学术色 token 重写模板
+  - `* { border: none }` 全局规则破坏 shadcn 边框 → Step 3 自动检查并提示移除
+  - nova preset Button default 变体 hover 写成 `[a]:hover` 只对锚点生效 → Step 5 自动 patch
+  - 保留 legacy CSS 变量（`--color-bg-main` 等）让旧 *.css 文件不破坏
+- 默认安装组件列表：button switch select input label separator card dialog dropdown-menu tabs
+- 支持 `--components` / `--no-theme` / `--keep-border-reset` / `--skip-button-fix` 参数
+
+Author: 公众号：手工川
