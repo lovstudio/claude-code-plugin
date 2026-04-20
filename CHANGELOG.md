@@ -3,7 +3,7 @@
 ## 1.2.0
 
 - **commands**: All top-level commands moved under `commands/lovstudio/` so every command gets the `/lovstudio:` namespace prefix (e.g. `/code-reviewer` → `/lovstudio:code-reviewer`)
-- **marketplace**: Renamed marketplace to `lovstudio-claude-plugins` and moved the canonical repo to `lovstudio/claude-plugins` (supersedes `markshawn2020/lovstudio-plugins-official`)
+- **marketplace**: Renamed marketplace to `lovstudio-cc-plugins` and moved the canonical repo to `lovstudio/cc-plugins` (supersedes `markshawn2020/lovstudio-plugins-official`)
 - **plugin.json**: Fixed stale `repository` URL
 
 ## 1.1.0
