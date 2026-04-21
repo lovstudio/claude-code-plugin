@@ -37,7 +37,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "cat | jq -r '.session_id' | xargs -I {} sh -c 'echo \"Resume: claude --resume {}\" > /tmp/cc-last-session && echo \"Resume: claude --resume {}\" > /dev/tty'"
+            "command": "jq -r '\"cd \\(.cwd) && claude --resume \\(.session_id)\"' | pbcopy"
           }
         ]
       }
