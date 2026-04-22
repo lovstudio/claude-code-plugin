@@ -37,7 +37,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "jq -r '\"cd \\(.cwd) && claude --resume \\(.session_id)\"' | pbcopy"
+            "command": "jq -r 'select(.reason != \"clear\" and .reason != \"resume\") | \"cd \\(.cwd) && claude --resume \\(.session_id)\"' | pbcopy"
           }
         ]
       }

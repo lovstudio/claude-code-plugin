@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1
+
+- **hooks**: `SessionEnd` no longer copies the resume command on `/clear` or interactive `/resume` — only fires on real exits (`prompt_input_exit` / `logout` / `other`)
+
 ## 0.3.0
 
 - **hooks**: `SessionEnd` now copies `cd <cwd> && claude --resume <session_id>` to the clipboard on exit (macOS `pbcopy`) so you can paste-resume the session
