@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.4.0
+
+- **statusline**: ship `vibe-genius.sh` as a managed script (`scripts/statusline/vibe-genius.sh`), migrated from the now-archived `claude-code-manager` repo
+- **statusline**: daily token counter with incremental per-session caching in `~/.claude/.daily_tokens` — O(delta) per tick, multi-session aggregation comes for free
+- **statusline**: session title suffix — prefers the `/compact` summary from the transcript, falls back to the first user prompt
+- **statusline**: display reordered to `cwd (branch) │ model (provider) │ cost / tokens │ version │ title`; cost/tokens bolded, title bold-white
+- **/lovstudio:better:statusline**: v2.0.0 — default mode now installs the script + wires `settings.json`; legacy inline-string mode preserved behind the `inline` argument
+
 ## 0.3.1
 
 - **hooks**: `SessionEnd` no longer copies the resume command on `/clear` or interactive `/resume` — only fires on real exits (`prompt_input_exit` / `logout` / `other`)

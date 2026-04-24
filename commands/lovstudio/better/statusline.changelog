@@ -1,5 +1,13 @@
 # Changelog for lovstudio/better-statusline
 
+## v2.0.0 - 2026-04-24
+- Ships the **vibe-genius** statusline as a managed script (`scripts/statusline/vibe-genius.sh`), installed to `~/.claude/statusline.sh`
+- New: daily token tracking with incremental per-session caching (`~/.claude/.daily_tokens`)
+- New: session title at end of line — `/compact` summary if available, otherwise first user prompt
+- Display order: cwd (branch) │ model (provider) │ daily cost / daily tokens │ Claude Code version │ title
+- Migrated from claude-code-manager (now archived)
+- Legacy inline-string mode preserved behind `inline` argument
+
 ## v1.0.0 - 2025-12-21
 - Migrated from `better-statusline.md` to `lovstudio/better-statusline.md`
 - Reorganized into lovstudio namespace

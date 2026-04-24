@@ -1,111 +1,79 @@
 ---
 
 allowed-tools: [Read, Write, Edit, Bash, Glob, AskUserQuestion]
-description: Update statusline config with version management and rollback support
-version: "1.0.0"
+description: Install or update the vibe-genius statusline (with daily token tracking + session title)
+version: "2.0.0"
 author: "公众号:手工川"
 aliases: /better-statusline
 ---
 
 # Better Statusline
 
-Update Claude Code statusline based on user requirements with full version management.
+Installs (or updates) the **vibe-genius** statusline shipped with this plugin:
 
-## Process
+```
+💥 cc-plugins (main) │ Opus 4.7 (anthropic) │ $66.78 / 5.0M │ V2.1.119 │ <session title>
+```
 
-### 1. Locate Config File
+It shows: cwd · git branch · model · provider · **daily cost / daily token usage** · Claude Code version · session title (from `/compact` summary or first user prompt).
+
+## Install (default mode)
+
+### 1. Copy the script into place
 
 ```bash
-config_path=~/.claude/settings.json
+src="$CLAUDE_PLUGIN_ROOT/scripts/statusline/vibe-genius.sh"
+dst="$HOME/.claude/statusline.sh"
+
+# Back up any existing file so /rollback works
+if [ -f "$dst" ]; then
+    mkdir -p "$HOME/.claude/statusline-versions"
+    ts=$(date +"%Y%m%d_%H%M%S")
+    cp "$dst" "$HOME/.claude/statusline-versions/statusline.sh.$ts.bak"
+fi
+
+cp "$src" "$dst"
+chmod +x "$dst"
 ```
 
-### 2. Backup Current Version
+### 2. Wire it into settings.json
 
-Before any changes:
-- Read current `settings.json`
-- Extract current statusline value
-- Generate version ID: `YYYYMMDD_HHMMSS`
-- Save to `~/.claude/statusline-versions/<version_id>.json`:
-  ```json
-  {
-    "timestamp": "YYYY-MM-DD HH:MM:SS",
-    "statusline": "current value"
+Edit `~/.claude/settings.json` so `statusLine` points at the script:
+
+```json
+{
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline.sh",
+    "padding": 0
   }
-  ```
-
-### 3. Parse User Requirements
-
-Analyze user input for:
-- Static text elements
-- Dynamic variables (git branch, time, etc.)
-- Formatting preferences (colors, separators)
-- Position/order of elements
-
-### 4. Build New Statusline
-
-Common patterns:
-- `{git_branch}` - Current git branch
-- `{cwd}` - Current working directory
-- `{time}` - Current time
-- `{user}` - Username
-- Custom text and symbols
-
-### 5. Update Config
-
-Use Edit tool to update `statusline` field in settings.json
-
-### 6. Verify Update
-
-- Re-read settings.json
-- Confirm new value matches intent
-- Display before/after comparison
-
-### 7. Show Rollback Instructions
-
-```
-Version saved as: <version_id>
-To rollback, run: /lovstudio/better-statusline rollback <version_id>
-To list versions: /lovstudio/better-statusline list
+}
 ```
 
-## Rollback Mode
+If `statusLine` already exists, replace its `command` — do not duplicate the key.
 
-When arguments contain "rollback <version_id>":
+### 3. Verify
 
-1. Read `~/.claude/statusline-versions/<version_id>.json`
-2. Extract statusline value
-3. Backup current (as new version)
-4. Apply old version to settings.json
-5. Confirm restoration
+Run `~/.claude/statusline.sh` once with a sample stdin, or just start a new Claude Code session and confirm the line renders.
 
-## List Mode
+## Rollback
 
-When arguments contain "list":
+Backups live at `~/.claude/statusline-versions/statusline.sh.<timestamp>.bak`.
 
-1. `ls ~/.claude/statusline-versions/`
-2. Read each version file
-3. Display table:
-   ```
-   Version ID        Timestamp            Statusline Preview
-   20250101_120000   2025-01-01 12:00:00  {git_branch} | ...
-   ```
+```bash
+ls ~/.claude/statusline-versions/
+cp ~/.claude/statusline-versions/statusline.sh.<ts>.bak ~/.claude/statusline.sh
+```
 
-## Edge Cases
+## How the daily-token counter works
 
-- Missing `~/.claude/statusline-versions/` → Create directory
-- No existing statusline field → Add new field
-- Invalid version_id for rollback → List available versions
-- Empty user requirements → Ask for clarification
+- Cache file: `~/.claude/.daily_tokens`, one line per `(day, session_id)` storing `byte_offset:session_token_total`.
+- Each statusLine tick only parses the **newly-appended bytes** of the current session's transcript — cost is O(delta), not O(transcript size).
+- Daily total = sum of `session_token_total` across all lines matching today. Multi-session aggregation is automatic: each session updates its own row, the sum is the day total.
+- Day rollover prunes old rows. File truncation resets the offset.
 
-## Examples
+## Legacy behavior (direct string)
 
-**Input**: "显示 git 分支和当前时间"
-**Output**: `{git_branch} | {time}`
-
-**Input**: "加上项目路径,用箭头分隔"
-**Output**: `{cwd} → {git_branch} → {time}`
-
-**Input**: "rollback 20250115_143022"
-**Action**: Restore statusline from that version
+If you just want to set `statusLine.command` to an inline string (no script), pass `inline` as the argument — the old v1.0.0 flow still works for that.
 
 ARGUMENTS: $ARGUMENTS
