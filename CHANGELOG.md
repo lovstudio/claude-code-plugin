@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.0
+
+- **statusline**: split into two lines — Line 1 is the status header (`cwd (branch) │ model (provider) │ cost / tokens │ version`), Line 2 is `💬 <title> · #<session-id>`. Session id returns after being dropped in 0.4.0.
+- **statusline**: title tone-down — `\033[0;97m` (plain bright white, no bold) so cost/tokens remain the brightest segment
+- **statusline**: when no title is available, Line 2 degrades to `💬 #<session-id>` so the two-line layout stays consistent
+- **subagent statusline**: new `scripts/statusline/subagent-vibe-genius.sh` renders each subagent row as `<status-glyph> <name> · <description> · <tokens>` (⚙ running · ✓ completed · ✗ failed · ○ queued)
+- **plugin settings**: new `.claude-plugin/settings.json` registers `subagentStatusLine` via `${CLAUDE_PLUGIN_ROOT}`, so enabling the plugin auto-wires the subagent row renderer — no install command needed for this piece
+- **docs**: confirmed via Anthropic docs that the *main* `statusLine` cannot be a declarative plugin component (plugin `settings.json` only accepts `agent` and `subagentStatusLine`); the install command remains the only supported path for the main status line
+
 ## 0.4.0
 
 - **statusline**: ship `vibe-genius.sh` as a managed script (`scripts/statusline/vibe-genius.sh`), migrated from the now-archived `claude-code-manager` repo

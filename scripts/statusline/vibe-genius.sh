@@ -253,7 +253,14 @@ fi
 
 # Output with colors (using ANSI escape codes)
 # Format: 💥 MM-DD HH:MM ($X.XX) │ Model (provider) │ directory (branch) #session │ V2.0.73 │ title
-echo -e "💥 \033[96m$DIR_NAME\033[0m$GIT_BRANCH \033[36m│\033[0m \033[35m$MODEL\033[0m \033[90m($PROVIDER)\033[0m \033[36m│\033[0m \033[1;92m$DAILY_COST_STR\033[0m \033[90m/\033[0m \033[1;93m$TOKENS_STR\033[0m \033[36m│\033[0m \033[33m$VERSION_STR\033[0m$TITLE_STR"
+# Line 1: status header — cwd (branch) │ model (provider) │ cost / tokens │ version
+echo -e "💥 \033[96m$DIR_NAME\033[0m$GIT_BRANCH \033[36m│\033[0m \033[35m$MODEL\033[0m \033[90m($PROVIDER)\033[0m \033[36m│\033[0m \033[1;92m$DAILY_COST_STR\033[0m \033[90m/\033[0m \033[1;93m$TOKENS_STR\033[0m \033[36m│\033[0m \033[33m$VERSION_STR\033[0m"
+# Line 2: 💬 <session title> · #<session short id>
+if [ -n "$TITLE" ]; then
+    echo -e "💬 \033[0;97m$TITLE\033[0m \033[90m· #$SESSION_SHORT\033[0m"
+else
+    echo -e "💬 \033[90m#$SESSION_SHORT\033[0m"
+fi
 
 # End of statusline script
 # Shared with love by Mark Shawn for the Vibe Genius community 💜

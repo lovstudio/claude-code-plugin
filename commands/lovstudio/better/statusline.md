@@ -65,6 +65,16 @@ ls ~/.claude/statusline-versions/
 cp ~/.claude/statusline-versions/statusline.sh.<ts>.bak ~/.claude/statusline.sh
 ```
 
+## Subagent statusline (auto-installed)
+
+Unlike the main statusline, the plugin ships `.claude-plugin/settings.json` with a `subagentStatusLine` entry pointing at `scripts/statusline/subagent-vibe-genius.sh`. Enabling the plugin is enough — no install command needed. Rows render as:
+
+```
+<glyph> <name> · <description> · <tokens>
+```
+
+where `<glyph>` is ⚙ (running) / ✓ (completed) / ✗ (failed) / ○ (queued).
+
 ## How the daily-token counter works
 
 - Cache file: `~/.claude/.daily_tokens`, one line per `(day, session_id)` storing `byte_offset:session_token_total`.
